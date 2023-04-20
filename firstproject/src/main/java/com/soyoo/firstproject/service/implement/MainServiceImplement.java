@@ -8,7 +8,7 @@ import com.soyoo.firstproject.service.MainService;
 public class MainServiceImplement implements MainService{
 
     @Override
-    public String helllo() {
+    public String hello() {
         return "Hello";
     }
     
