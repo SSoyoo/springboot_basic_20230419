@@ -1,5 +1,6 @@
 package com.soyoo.firstproject.controller;
 
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soyoo.firstproject.dto.request.ExamleDto;
+import com.soyoo.firstproject.dto.response.ExampleResponseDto;
 
 class ParamDto {
     String data1;
@@ -133,20 +135,28 @@ public class RestApiController {
     }
 
     // @RequsetBody 로 post, put, patch method에서 데이터받기
-    // request Body에 있는 데이터를 받기 위한 어노테이션 
+    // request Body에 있는 데이터를 받기 위한 어노테이션
 
     @PostMapping("request-body")
 
     public ResponseEntity<ParamDto> requestBody(
-        //@RequestBody String data
-        @RequestBody ParamDto dto
-    ){
+            // @RequestBody String data
+            @RequestBody ParamDto dto) {
         return ResponseEntity.status(408).body(dto);
     }
 
     @PostMapping("lombok")
-    public String lombok(@RequestBody ExamleDto requestBody){
-        return requestBody.toString();
+    public ResponseEntity<ExampleResponseDto> lombok(
+            @Valid @RequestBody ExamleDto requestBody) {
+
+        String data1 = requestBody.getParameter1();
+        String data2 = requestBody.getParameter2();
+        String data3 = requestBody.getParameter3();
+
+        ExampleResponseDto responseData = new ExampleResponseDto(data1, data2, data3);
+        // ExampleResponseDto responseData = ExampleResponseDto.builder().data1(data1).build();
+
+        return ResponseEntity.status(200).body(responseData);
     }
 
 }
