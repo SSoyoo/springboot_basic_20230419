@@ -2,6 +2,7 @@ package com.soyoo.firstproject.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.soyoo.firstproject.dto.request.ExamleDto;
 import com.soyoo.firstproject.dto.response.ExampleResponseDto;
+import com.soyoo.firstproject.service.RestApiService;
+import com.soyoo.firstproject.service.implement.RestApiServiceImplement;
 
 class ParamDto {
     String data1;
@@ -51,8 +54,19 @@ class ParamDto {
  */
 @RequestMapping("api")
 public class RestApiController {
+   
+    @Autowired
+    private RestApiService restApiService;
+    
+    public RestApiController(RestApiService restApiService){
+        this.restApiService =restApiService;
+    }
+
+ 
 
     @RequestMapping(method = { RequestMethod.GET }, value = "hello2")
+
+    
 
     public String hello2() {
         return "hello2";
@@ -63,7 +77,7 @@ public class RestApiController {
     // @RequestMapping(method=RequestMethod.GET, value="get-method")랑 동일
     @GetMapping("get-method")
     public String getMethod() {
-        return "Response of Get request";
+        return restApiService.getMethod();
     }
 
     /*
@@ -71,11 +85,11 @@ public class RestApiController {
      */
 
     // Post Method : 클라이언트가 서버에 데이터를 작성하기 위한 요청의 method
-    // @RequestMapping(method={RequestMethod.POST}, value = "post-method")
+    // @RequestMapping(method={RequestMethod.POST},  value = "post-method")
 
     @PostMapping("post-method")
     public String postMethod() {
-        return "Response of Post Request";
+        return restApiService.postMethod();
     }
 
     /*
@@ -87,7 +101,7 @@ public class RestApiController {
 
     @PatchMapping("patch-method")
     public String patchMethod() {
-        return "Response of Patch Request";
+        return restApiService.patchMethod();
     }
 
     /*
@@ -158,5 +172,7 @@ public class RestApiController {
 
         return ResponseEntity.status(200).body(responseData);
     }
+
+
 
 }
