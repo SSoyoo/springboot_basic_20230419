@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.soyoo.firstproject.dto.request.ExamleDto;
 import com.soyoo.firstproject.dto.response.ExampleResponseDto;
 import com.soyoo.firstproject.service.RestApiService;
-import com.soyoo.firstproject.service.implement.RestApiServiceImplement;
+
 
 class ParamDto {
     String data1;
@@ -113,7 +113,7 @@ public class RestApiController {
 
     @DeleteMapping("delete-method")
     public String deleteMethod() {
-        return "Response fo Delete Request";
+        return restApiService.deleteMethod();
     }
 
     /*
