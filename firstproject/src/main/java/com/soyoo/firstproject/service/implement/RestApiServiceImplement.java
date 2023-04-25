@@ -24,6 +24,7 @@ public class RestApiServiceImplement implements RestApiService {
         // ExampleEntity exampleEntity = exampleRepository.findById(1).get();
         ExampleEntity exampleEntity = exampleRepository.findByPk(1);
         return exampleEntity == null? "null" :exampleEntity.toString();
+        exampleRepository.
     }
 
     @Override
