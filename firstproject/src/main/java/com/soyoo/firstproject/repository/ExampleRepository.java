@@ -12,9 +12,9 @@ import com.soyoo.firstproject.entity.ExampleEntity;
 public interface ExampleRepository extends JpaRepository<ExampleEntity,Integer> {
 
     public ExampleEntity findByPk(int pk);
-    public List<ExampleEntity>findByExampleColumn3AndExampleCoulmn2(boolean exampleColumn3, boolean exampleColumn2);
+    //public List<ExampleEntity>findByExampleColumn3AndExampleCoulmn2(boolean exampleColumn3, boolean exampleColumn2);
 
-    public boolean exexistsByExampleColumn3(boolean exampleColumn3);
+   // public boolean exexistsByExampleColumn3(boolean exampleColumn3);
     
 
     
