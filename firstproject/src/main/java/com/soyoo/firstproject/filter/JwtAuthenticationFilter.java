@@ -31,15 +31,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+            throws ServletException, IOException { //HTTP 요청에 대한 필터링을 처리
 
                 try {
                     
-                    String jwt = parseToken(request);
+                    String jwt = parseToken(request); // 토큰을 가져오고 유효한지 확인 
                     boolean hasJwt = jwt != null;
                     if(!hasJwt) {
                         filterChain.doFilter(request, response);
-                        return; // 토큰이 비었으면 리턴? 
+                        return;  
                     }
 
                     String subject = jwtTokenProvider.validate(jwt); // 서브젝트를 가져올 수 있음
