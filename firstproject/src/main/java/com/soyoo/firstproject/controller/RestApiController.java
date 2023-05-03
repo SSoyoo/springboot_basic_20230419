@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -76,8 +77,9 @@ public class RestApiController {
     // GET method : 클라이언트가 서버에게 데이터를 받기 위한 요청의 메소드
     // @RequestMapping(method=RequestMethod.GET, value="get-method")랑 동일
     @GetMapping("get-method")
-    public String getMethod() {
-        return restApiService.getMethod();
+    public String getMethod(@AuthenticationPrincipal String subject) {
+        
+        return subject;
     }
 
     /*

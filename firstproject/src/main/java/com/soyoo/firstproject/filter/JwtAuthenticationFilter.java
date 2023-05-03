@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         boolean hasToken = 
             token != null && 
-            token.equalsIgnoreCase("null");
+            !token.equalsIgnoreCase("null");
         if (!hasToken) return null;
 
         boolean isBearer = token.startsWith("Bearer ");
