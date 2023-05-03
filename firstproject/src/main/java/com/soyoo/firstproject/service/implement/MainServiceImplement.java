@@ -27,6 +27,13 @@ public class MainServiceImplement implements MainService{
         return jwt;
     }
 
+    @Override
+    public String validJwt(String jwt) {
+     
+        String subject = jwtTokenProvider.validate(jwt);
+        return subject;
+    }
+
     
     
 }
