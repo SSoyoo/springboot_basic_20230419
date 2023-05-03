@@ -8,6 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -26,7 +32,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+                try {
+                    
+                    String jwt = parseToken(request);
+                    boolean hasJwt = jwt != null;
+                    if(!hasJwt) {
+                        filterChain.doFilter(request, response);
+                        return; // 토큰이 비었으면 리턴? 
+                    }
+
+                    String subject = jwtTokenProvider.validate(jwt); // 서브젝트를 가져올 수 있음
+                    AbstractAuthenticationToken authenticationToken = 
+                        new UsernamePasswordAuthenticationToken(subject, null, AuthorityUtils.NO_AUTHORITIES);
+
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); // 이건 또 뭐하는건데 
+                    SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+                    securityContext.setAuthentication(authenticationToken); //그래서 뭐하는건지 설명 좀 해라고...
+
+                    SecurityContextHolder.setContext(securityContext);
+
+
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
         
+                filterChain.doFilter(request, response);
     }
 
     private String parseToken(HttpServletRequest request) {
