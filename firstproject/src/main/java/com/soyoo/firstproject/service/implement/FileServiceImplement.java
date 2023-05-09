@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,6 +53,24 @@ public class FileServiceImplement implements FileService{
 
 
         
+    }
+
+    @Override
+    public Resource getFile(String fileName) {
+
+        Resource file = null;
+        try {
+            //파일 가져오기 
+            String url = "file:" + FILE_PATH + fileName;
+            file = new UrlResource(url);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+       return file;
+
+
+
     }
     
 }
